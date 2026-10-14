@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Security Control Tower</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ============== SIDEBAR ============== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><i class="fas fa-shield-halved"></i></div>
+      <div class="logo-text">
+        Security Control Tower
+        <span>CISO Dashboard</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a class="nav-item active" data-page="overview">
+        <i class="fas fa-th-large"></i> Overview
+      </a>
+
+      <div class="nav-section-label">Security Domains</div>
+      <a class="nav-item" data-page="assets">
+        <i class="fas fa-server"></i> Asset Coverage
+      </a>
+      <a class="nav-item" data-page="protection">
+        <i class="fas fa-shield-alt"></i> Protection Coverage
+      </a>
+      <a class="nav-item" data-page="vulnerabilities">
+        <i class="fas fa-bug"></i> Vulnerability &amp; Patch
+      </a>
+      <a class="nav-item" data-page="identity">
+        <i class="fas fa-user-shield"></i> Identity &amp; Access
+      </a>
+      <a class="nav-item" data-page="network">
+        <i class="fas fa-network-wired"></i> Network Security
+      </a>
+      <a class="nav-item" data-page="cloud">
+        <i class="fas fa-cloud"></i> Cloud Security
+      </a>
+
+      <div class="nav-section-label">Operations</div>
+      <a class="nav-item" data-page="datasources">
+        <i class="fas fa-database"></i> Data Sources
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="avatar">AD</div>
+      <div class="user-info">
+        <div class="name">Admin</div>
+        <div class="role">CISO Dashboard</div>
+      </div>
+      <i class="fas fa-ellipsis-vertical" style="color: var(--text-tertiary); cursor: pointer;"></i>
+    </div>
+  </aside>
+
+  <!-- ============== MAIN CONTENT ============== -->
+  <div class="main-content">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn" id="menuToggle" style="display:none;">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div>
+          <h1 id="pageTitle">Overview</h1>
+          <div class="breadcrumb" id="breadcrumb">See Tomorrow's Risks Today.</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search assets, vulnerabilities, domains, IPs...">
+        </div>
+        <div class="filter-dropdown">
+          <i class="fas fa-filter"></i> All Assets <i class="fas fa-chevron-down" style="font-size:10px;"></i>
+        </div>
+        <div class="filter-dropdown">
+          <i class="fas fa-calendar"></i> Last 30 days <i class="fas fa-chevron-down" style="font-size:10px;"></i>
+        </div>
+        <button class="topbar-btn">
+          <i class="fas fa-bell"></i>
+          <span class="badge">5</span>
+        </button>
+        <button class="topbar-btn">
+          <i class="fas fa-cog"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="page-container">
+
+      <!-- =====================================================
+           PAGE: OVERVIEW
+           ===================================================== -->
+      <section class="page active" id="page-overview">
+
+        <!-- Threat Bulletin -->
+        <div class="threat-bulletin mb-24">
+          <div class="bulletin-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div>
+            <span class="bulletin-tag">Threat Bulletin</span>
+            <div class="bulletin-title">[External] SOC Threat Intelligence: MS reveals Passkey-themed social engineering leading to ID compromise</div>
+            <div class="bulletin-desc">Microsoft has identified ongoing social engineering campaigns using passkey-themed lures. Recommend enhanced user awareness training and monitoring of authentication anomalies.</div>
+          </div>
+        </div>
+
+        <!-- Row 1: Security Score + Domain Scores -->
+        <div class="grid-3-2 mb-24">
+          <!-- Security Score -->
+          <div class="security-score-card">
+            <div class="score-label">Overall</div>
+            <div class="score-title">Security Score</div>
+            <div class="security-score-gauge">
+              <div class="gauge-ring">
+                <svg viewBox="0 0 120 120">
+                  <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+                  <circle class="gauge-progress" cx="60" cy="60" r="50"
+                    stroke-dasharray="314" stroke-dashoffset="41"></circle>
+                </svg>
+                <div class="gauge-value">
+                  <div class="number">87</div>
+                  <div class="total">/ 100</div>
+                </div>
+              </div>
+              <div class="gauge-info">
+                <div class="trend-row">
+                  <span class="trend-badge up"><i class="fas fa-arrow-up"></i> 5%</span>
+                  <span style="font-size:12px;opacity:0.7;">vs. last month</span>
+                </div>
+                <div class="gauge-description">Strong security posture with improvements in patch compliance and identity controls. Focus areas: DLP coverage and cloud onboarding.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain Scores -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="domain-score-card" onclick="navigateTo('assets')">
+              <div class="domain-icon"><i class="fas fa-server" style="color:var(--accent-blue)"></i></div>
+              <div class="domain-name">Assets</div>
+              <div class="domain-value" style="color:var(--accent-green)">92<span class="domain-unit">%</span></div>
+            </div>
+            <div class="domain-score-card" onclick="navigateTo('identity')">
+              <div class="domain-icon"><i class="fas fa-user-shield" style="color:var(--accent-purple)"></i></div>
+              <div class="domain-name">Identity</div>
+              <div class="domain-value" style="color:var(--accent-yellow)">85<span class="domain-unit">%</span></div>
+            </div>
+            <div class="domain-score-card" onclick="navigateTo('network')">
+              <div class="domain-icon"><i class="fas fa-network-wired" style="color:var(--accent-cyan)"></i></div>
+              <div class="domain-name">Network</div>
+              <div class="domain-value" style="color:var(--accent-green)">88<span class="domain-unit">%</span></div>
+            </div>
+            <div class="domain-score-card" onclick="navigateTo('cloud')">
+              <div class="domain-icon"><i class="fas fa-cloud" style="color:var(--accent-orange)"></i></div>
+              <div class="domain-name">Cloud</div>
+              <div class="domain-value" style="color:var(--accent-yellow)">81<span class="domain-unit">%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: KPI Cards -->
+        <div class="grid-5 mb-24">
+          <div class="kpi-card" onclick="navigateTo('assets')">
+            <div class="kpi-icon blue"><i class="fas fa-laptop"></i></div>
+            <div class="kpi-value">24,892</div>
+            <div class="kpi-label">Total Assets</div>
+            <div class="kpi-trend up"><i class="fas fa-arrow-up"></i> 6% <span class="trend-label">vs. last month</span></div>
+          </div>
+          <div class="kpi-card" onclick="navigateTo('protection')">
+            <div class="kpi-icon green"><i class="fas fa-shield-alt"></i></div>
+            <div class="kpi-value">3,428</div>
+            <div class="kpi-label">Exposed Assets</div>
+            <div class="kpi-trend up" style="color:var(--red)"><i class="fas fa-arrow-up"></i> 15% <span class="trend-label">vs. last month</span></div>
+          </div>
+          <div class="kpi-card" onclick="navigateTo('vulnerabilities')">
+            <div class="kpi-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="kpi-value">342</div>
+            <div class="kpi-label">Critical Risks</div>
+            <div class="kpi-trend up" style="color:var(--red)"><i class="fas fa-arrow-up"></i> 27% <span class="trend-label">vs. last month</span></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon orange"><i class="fas fa-star"></i></div>
+            <div class="kpi-value">1,206</div>
+            <div class="kpi-label">High Value Assets</div>
+            <div class="kpi-trend up"><i class="fas fa-arrow-up"></i> 4% <span class="trend-label">vs. last month</span></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon purple"><i class="fas fa-clock"></i></div>
+            <div class="kpi-value">12 <small style="font-size:14px;font-weight:500;">days</small></div>
+            <div class="kpi-label">Mean Time to Remediate</div>
+            <div class="kpi-trend up"><i class="fas fa-arrow-down"></i> 28% <span class="trend-label">vs. last month</span></div>
+          </div>
+        </div>
+
+        <!-- Row 3: CTEM Lifecycle -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3><i class="fas fa-arrows-spin" style="color:var(--blue-primary);margin-right:8px;"></i>CTEM Lifecycle</h3>
+            <span class="view-details">Continuous Threat Exposure Management</span>
+          </div>
+          <div class="card-body">
+            <div class="ctem-lifecycle">
+              <div class="ctem-stage" onclick="navigateTo('assets')">
+                <div class="stage-circle"><i class="fas fa-crosshairs"></i></div>
+                <div class="stage-label">Scoping</div>
+              </div>
+              <div class="ctem-arrow"></div>
+              <div class="ctem-stage" onclick="navigateTo('assets')">
+                <div class="stage-circle"><i class="fas fa-search"></i></div>
+                <div class="stage-label">Discovery</div>
+              </div>
+              <div class="ctem-arrow"></div>
+              <div class="ctem-stage" onclick="navigateTo('vulnerabilities')">
+                <div class="stage-circle"><i class="fas fa-sort-amount-down"></i></div>
+                <div class="stage-label">Prioritization</div>
+              </div>
+              <div class="ctem-arrow"></div>
+              <div class="ctem-stage" onclick="navigateTo('vulnerabilities')">
+                <div class="stage-circle"><i class="fas fa-check-double"></i></div>
+                <div class="stage-label">Validation</div>
+              </div>
+              <div class="ctem-arrow"></div>
+              <div class="ctem-stage" onclick="navigateTo('protection')">
+                <div class="stage-circle"><i class="fas fa-rocket"></i></div>
+                <div class="stage-label">Mobilization</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4: Top Risks + Interactive Hexagon -->
+        <div class="grid-2 mb-24">
+          <!-- Top Risks -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Top Risks Requiring Attention</h3>
+              <span class="view-details" onclick="navigateTo('vulnerabilities')">View All <i class="fas fa-arrow-right"></i></span>
+            </div>
+            <div class="card-body">
+              <ul class="risk-list">
+                <li class="risk-item">
+                  <div class="risk-indicator critical"></div>
+                  <div class="risk-info">
+                    <div class="risk-name">Defender Missing</div>
+                    <div class="risk-detail">Endpoints without Microsoft Defender</div>
+                  </div>
+                  <span class="risk-badge critical">143 Assets</span>
+                </li>
+                <li class="risk-item">
+                  <div class="risk-indicator critical"></div>
+                  <div class="risk-info">
+                    <div class="risk-name">Critical Patch Missing</div>
+                    <div class="risk-detail">Older than N-2 patch cycle</div>
+                  </div>
+                  <span class="risk-badge critical">82 Assets</span>
+                </li>
+                <li class="risk-item">
+                  <div class="risk-indicator high"></div>
+                  <div class="risk-info">
+                    <div class="risk-name">DLP Not Enabled</div>
+                    <div class="risk-detail">Data Loss Prevention policy missing</div>
+                  </div>
+                  <span class="risk-badge high">312 Users</span>
+                </li>
+                <li class="risk-item">
+                  <div class="risk-indicator high"></div>
+                  <div class="risk-info">
+                    <div class="risk-name">MFA Missing</div>
+                    <div class="risk-detail">Accounts without multi-factor authentication</div>
+                  </div>
+                  <span class="risk-badge high">26 Accounts</span>
+                </li>
+                <li class="risk-item">
+                  <div class="risk-indicator medium"></div>
+                  <div class="risk-info">
+                    <div class="risk-name">BitLocker Coverage</div>
+                    <div class="risk-detail">Disk encryption enabled on endpoints</div>
+                  </div>
+                  <span class="risk-badge low">98%</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Interactive Security Hexagon -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Security Domain Overview</h3>
+              <span class="view-details">Interactive Map</span>
+            </div>
+            <div class="card-body">
+              <div class="hex-grid">
+                <div class="hex-item" onclick="navigateTo('identity')">
+                  <div class="hex-icon"><i class="fas fa-user-shield"></i></div>
+                  <div class="hex-label">IAM</div>
+                  <div class="hex-value" style="color:var(--accent-purple)">85%</div>
+                </div>
+                <div class="hex-item" onclick="navigateTo('network')">
+                  <div class="hex-icon"><i class="fas fa-network-wired"></i></div>
+                  <div class="hex-label">Network</div>
+                  <div class="hex-value" style="color:var(--accent-cyan)">88%</div>
+                </div>
+                <div class="hex-item" onclick="navigateTo('cloud')">
+                  <div class="hex-icon"><i class="fas fa-cloud"></i></div>
+                  <div class="hex-label">Cloud</div>
+                  <div class="hex-value" style="color:var(--accent-orange)">81%</div>
+                </div>
+                <div class="hex-item" style="visibility:hidden;"></div>
+                <div class="hex-item center">
+                  <div class="hex-icon"><i class="fas fa-shield-halved"></i></div>
+                  <div class="hex-label">CTEM</div>
+                  <div class="hex-value">87</div>
+                </div>
+                <div class="hex-item" style="visibility:hidden;"></div>
+                <div class="hex-item" onclick="navigateTo('vulnerabilities')">
+                  <div class="hex-icon"><i class="fas fa-bug"></i></div>
+                  <div class="hex-label">Vulnerability</div>
+                  <div class="hex-value" style="color:var(--accent-red)">76%</div>
+                </div>
+                <div class="hex-item" onclick="navigateTo('protection')">
+                  <div class="hex-icon"><i class="fas fa-shield-alt"></i></div>
+                  <div class="hex-label">Endpoint</div>
+                  <div class="hex-value" style="color:var(--accent-green)">92%</div>
+                </div>
+                <div class="hex-item" onclick="navigateTo('assets')">
+                  <div class="hex-icon"><i class="fas fa-server"></i></div>
+                  <div class="hex-label">Assets</div>
+                  <div class="hex-value" style="color:var(--accent-blue)">92%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 5: Risk Trend + Data Source Health + Recent Activity -->
+        <div class="grid-3 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3>Risk Trend</h3>
+              <span class="view-details">30 / 90 / 180 days</span>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="chartRiskTrend"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Data Source Health</h3>
+              <span class="view-details" onclick="navigateTo('datasources')">View All <i class="fas fa-arrow-right"></i></span>
+            </div>
+            <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div class="ds-health-card">
+                <div class="ds-icon" style="background:var(--blue-light);color:var(--accent-blue);"><i class="fas fa-sitemap"></i></div>
+                <div class="ds-info">
+                  <div class="ds-name">AD</div>
+                  <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+                </div>
+              </div>
+              <div class="ds-health-card">
+                <div class="ds-icon" style="background:var(--green-light);color:var(--accent-green);"><i class="fas fa-mobile-screen"></i></div>
+                <div class="ds-info">
+                  <div class="ds-name">Intune</div>
+                  <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+                </div>
+              </div>
+              <div class="ds-health-card">
+                <div class="ds-icon" style="background:var(--purple-light);color:var(--accent-purple);"><i class="fas fa-shield-halved"></i></div>
+                <div class="ds-info">
+                  <div class="ds-name">Defender</div>
+                  <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+                </div>
+              </div>
+              <div class="ds-health-card">
+                <div class="ds-icon" style="background:var(--orange-light);color:var(--accent-orange);"><i class="fas fa-fire"></i></div>
+                <div class="ds-info">
+                  <div class="ds-name">FortiManager</div>
+                  <div class="health-indicator"><div class="health-dot attention"></div><span class="health-text attention">Attention</span></div>
+                </div>
+              </div>
+              <div class="ds-health-card">
+                <div class="ds-icon" style="background:var(--red-light);color:var(--accent-red);"><i class="fas fa-search"></i></div>
+                <div class="ds-info">
+                  <div class="ds-name">Nessus</div>
+                  <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+                </div>
+              </div>
+              <div class="ds-health-card">
+                <div class="ds-icon" style="background:var(--yellow-light);color:var(--accent-yellow);"><i class="fas fa-terminal"></i></div>
+                <div class="ds-info">
+                  <div class="ds-name">SCCM</div>
+                  <div class="health-indicator"><div class="health-dot degraded"></div><span class="health-text degraded">Degraded</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Activity</h3>
+              <span class="view-details">View All <i class="fas fa-arrow-right"></i></span>
+            </div>
+            <div class="card-body">
+              <ul class="activity-list">
+                <li class="activity-item">
+                  <div class="activity-icon info"><i class="fas fa-plus"></i></div>
+                  <div class="activity-info">
+                    <div class="activity-title">New asset discovered</div>
+                    <div class="activity-desc">api.acme.com</div>
+                  </div>
+                  <span class="activity-time">5 mins ago</span>
+                </li>
+                <li class="activity-item">
+                  <div class="activity-icon danger"><i class="fas fa-exclamation"></i></div>
+                  <div class="activity-info">
+                    <div class="activity-title">Critical vulnerability detected</div>
+                    <div class="activity-desc">CVE-2024-3094</div>
+                  </div>
+                  <span class="activity-time">18 mins ago</span>
+                </li>
+                <li class="activity-item">
+                  <div class="activity-icon warning"><i class="fas fa-key"></i></div>
+                  <div class="activity-info">
+                    <div class="activity-title">New data leak found</div>
+                    <div class="activity-desc">employee@acme.com</div>
+                  </div>
+                  <span class="activity-time">42 mins ago</span>
+                </li>
+                <li class="activity-item">
+                  <div class="activity-icon success"><i class="fas fa-check"></i></div>
+                  <div class="activity-info">
+                    <div class="activity-title">Patch deployed successfully</div>
+                    <div class="activity-desc">KB5034441 - 892 devices</div>
+                  </div>
+                  <span class="activity-time">1 hour ago</span>
+                </li>
+                <li class="activity-item">
+                  <div class="activity-icon info"><i class="fas fa-shield-alt"></i></div>
+                  <div class="activity-info">
+                    <div class="activity-title">Third party risk score increased</div>
+                    <div class="activity-desc">vendor-example.com</div>
+                  </div>
+                  <span class="activity-time">2 hours ago</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =====================================================
+           PAGE: ASSET COVERAGE
+           ===================================================== -->
+      <section class="page" id="page-assets">
+        <div class="section-header mb-24">
+          <div>
+            <h2>Asset Coverage &amp; Inventory</h2>
+            <div class="section-subtitle">Complete inventory of all managed assets across the organization</div>
+          </div>
+        </div>
+
+        <!-- KPI Row -->
+        <div class="grid-5 mb-24">
+          <div class="kpi-card">
+            <div class="kpi-icon blue"><i class="fas fa-laptop"></i></div>
+            <div class="kpi-value">24,892</div>
+            <div class="kpi-label">Total Assets</div>
+            <div class="kpi-trend up"><i class="fas fa-arrow-up"></i> 6%</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon green"><i class="fab fa-windows"></i></div>
+            <div class="kpi-value">15,234</div>
+            <div class="kpi-label">Windows</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon purple"><i class="fab fa-apple"></i></div>
+            <div class="kpi-value">2,341</div>
+            <div class="kpi-label">Mac</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon orange"><i class="fas fa-mobile-alt"></i></div>
+            <div class="kpi-value">5,459</div>
+            <div class="kpi-label">Mobile (iOS + Android)</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon red"><i class="fas fa-server"></i></div>
+            <div class="kpi-value">1,858</div>
+            <div class="kpi-label">Servers</div>
+          </div>
+        </div>
+
+        <!-- Asset Tree + Donut -->
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3>Asset Hierarchy</h3>
+              <span class="view-details">Click to drill down</span>
+            </div>
+            <div class="card-body">
+              <div class="asset-tree">
+                <div class="tree-root">
+                  <div class="tree-label"><i class="fas fa-building"></i> All Assets <span class="tree-count">24,892</span></div>
+                  <div class="tree-node">
+                    <div class="tree-label"><i class="fas fa-laptop"></i> Endpoints <span class="tree-count">21,176</span></div>
+                    <div class="tree-node">
+                      <div class="tree-label"><i class="fab fa-windows"></i> Windows <span class="tree-count">15,234</span></div>
+                    </div>
+                    <div class="tree-node">
+                      <div class="tree-label"><i class="fab fa-apple"></i> Mac <span class="tree-count">2,341</span></div>
+                    </div>
+                    <div class="tree-node">
+                      <div class="tree-label"><i class="fab fa-apple"></i> iOS <span class="tree-count">3,567</span></div>
+                    </div>
+                    <div class="tree-node">
+                      <div class="tree-label"><i class="fab fa-android"></i> Android <span class="tree-count">1,892</span></div>
+                    </div>
+                  </div>
+                  <div class="tree-node">
+                    <div class="tree-label"><i class="fas fa-server"></i> Servers <span class="tree-count">1,858</span></div>
+                  </div>
+                  <div class="tree-node">
+                    <div class="tree-label"><i class="fas fa-cloud"></i> Cloud Assets <span class="tree-count">892</span></div>
+                  </div>
+                  <div class="tree-node">
+                    <div class="tree-label"><i class="fas fa-handshake"></i> Third Party <span class="tree-count">1,143</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Assets by Technology</h3>
+              <span class="view-details">View Details <i class="fas fa-arrow-right"></i></span>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="max-height:260px;">
+                <canvas id="chartAssetsByTech"></canvas>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;font-size:12px;">
+                <div style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#1a73e8;display:inline-block;"></span> Web & Domains: 8,421 (34%)</div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#f9683a;display:inline-block;"></span> Cloud: 5,982 (24%)</div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#34a853;display:inline-block;"></span> Endpoints: 4,120 (17%)</div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#9334e6;display:inline-block;"></span> Network Devices: 2,431 (10%)</div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#fbbc04;display:inline-block;"></span> Third Party: 2,118 (9%)</div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#5f6368;display:inline-block;"></span> Others: 1,820 (7%)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Endpoint Source Table -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3><i class="fas fa-laptop" style="color:var(--blue-primary);margin-right:8px;"></i>Endpoint Security Controls &amp; Sources</h3>
+          </div>
+          <div class="card-body" style="padding:0;overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Control Area</th>
+                  <th>Source 1</th>
+                  <th>Source 2</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Zscaler - ZIA not deployed (Laptops)</td><td><span class="source-badge">Zscaler</span></td><td><span class="source-badge">AD/DNS/DHCP</span></td><td><span class="risk-badge high">Gap</span></td></tr>
+                <tr><td>DLP - Policy not enabled</td><td><span class="source-badge">Zscaler</span></td><td><span class="source-badge">AD/Intune</span></td><td><span class="risk-badge high">Gap</span></td></tr>
+                <tr><td>Older than N-2 Patching</td><td><span class="source-badge">Intune/Defender</span></td><td><span class="source-badge">SCCM</span></td><td><span class="risk-badge critical">Critical</span></td></tr>
+                <tr><td>EOL/EOS</td><td><span class="source-badge">Intune/Defender</span></td><td>-</td><td><span class="risk-badge medium">Monitor</span></td></tr>
+                <tr><td>OS Distribution</td><td><span class="source-badge">Intune/Defender</span></td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>BitLocker</td><td><span class="source-badge">Intune/Defender</span></td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>Defender</td><td><span class="source-badge">Intune/Defender</span></td><td><span class="source-badge">AD/DNS/DHCP</span></td><td><span class="risk-badge critical">Critical</span></td></tr>
+                <tr><td>Android Devices</td><td><span class="source-badge">Intune/Defender</span></td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>MAC Devices</td><td><span class="source-badge">Intune/Defender</span></td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>iOS Devices</td><td><span class="source-badge">Intune/Defender</span></td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>Windows Activation</td><td><span class="source-badge">Intune/Defender</span></td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Server Source Table -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3><i class="fas fa-server" style="color:var(--accent-green);margin-right:8px;"></i>Server Security Controls &amp; Sources</h3>
+          </div>
+          <div class="card-body" style="padding:0;overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Control Area</th>
+                  <th>Source 1</th>
+                  <th>Source 2</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Defender</td><td><span class="source-badge">Intune/Defender</span></td><td><span class="source-badge">AD/DNS/DHCP</span></td><td><span class="risk-badge critical">Critical</span></td></tr>
+                <tr><td>MDC</td><td><span class="source-badge">MDC Portal</span></td><td><span class="source-badge">AD/DNS/DHCP</span></td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>Older than N-1 Patching</td><td><span class="source-badge">Nessus/Defender</span></td><td><span class="source-badge">WIZ</span></td><td><span class="risk-badge high">Gap</span></td></tr>
+                <tr><td>EOL/EOS</td><td><span class="source-badge">Nessus/Defender</span></td><td><span class="source-badge">WIZ</span></td><td><span class="risk-badge medium">Monitor</span></td></tr>
+                <tr><td>OS Distribution</td><td><span class="source-badge">Nessus/Defender</span></td><td><span class="source-badge">WIZ</span></td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>Cloud Onboarding on WIZ</td><td><span class="source-badge">WIZ</span></td><td><span class="source-badge">Sentinel</span></td><td><span class="risk-badge medium">Monitor</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           PAGE: PROTECTION COVERAGE
+           ===================================================== -->
+      <section class="page" id="page-protection">
+        <div class="section-header mb-24">
+          <div>
+            <h2>Protection Coverage</h2>
+            <div class="section-subtitle">Security controls deployment and coverage across the estate</div>
+          </div>
+        </div>
+
+        <!-- Coverage Rings -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3>Endpoint Security Coverage</h3>
+            <span class="view-details">Gap Analysis</span>
+          </div>
+          <div class="card-body">
+            <div class="coverage-rings">
+              <div class="coverage-ring-item">
+                <div class="score-ring score-ring-sm">
+                  <svg viewBox="0 0 80 80">
+                    <circle class="ring-bg" cx="40" cy="40" r="32"></circle>
+                    <circle class="ring-progress" cx="40" cy="40" r="32" stroke="var(--accent-green)"
+                      stroke-dasharray="201" stroke-dashoffset="10" style="transform:rotate(-90deg);transform-origin:center;"></circle>
+                  </svg>
+                  <div class="ring-value"><span class="value" style="font-size:16px;">95%</span></div>
+                </div>
+                <div class="score-ring-label">Defender</div>
+              </div>
+              <div class="coverage-ring-item">
+                <div class="score-ring score-ring-sm">
+                  <svg viewBox="0 0 80 80">
+                    <circle class="ring-bg" cx="40" cy="40" r="32"></circle>
+                    <circle class="ring-progress" cx="40" cy="40" r="32" stroke="var(--accent-green)"
+                      stroke-dasharray="201" stroke-dashoffset="4" style="transform:rotate(-90deg);transform-origin:center;"></circle>
+                  </svg>
+                  <div class="ring-value"><span class="value" style="font-size:16px;">98%</span></div>
+                </div>
+                <div class="score-ring-label">BitLocker</div>
+              </div>
+              <div class="coverage-ring-item">
+                <div class="score-ring score-ring-sm">
+                  <svg viewBox="0 0 80 80">
+                    <circle class="ring-bg" cx="40" cy="40" r="32"></circle>
+                    <circle class="ring-progress" cx="40" cy="40" r="32" stroke="var(--orange)"
+                      stroke-dasharray="201" stroke-dashoffset="56" style="transform:rotate(-90deg);transform-origin:center;"></circle>
+                  </svg>
+                  <div class="ring-value"><span class="value" style="font-size:16px;">72%</span></div>
+                </div>
+                <div class="score-ring-label">DLP</div>
+              </div>
+              <div class="coverage-ring-item">
+                <div class="score-ring score-ring-sm">
+                  <svg viewBox="0 0 80 80">
+                    <circle class="ring-bg" cx="40" cy="40" r="32"></circle>
+                    <circle class="ring-progress" cx="40" cy="40" r="32" stroke="var(--yellow)"
+                      stroke-dasharray="201" stroke-dashoffset="38" style="transform:rotate(-90deg);transform-origin:center;"></circle>
+                  </svg>
+                  <div class="ring-value"><span class="value" style="font-size:16px;">81%</span></div>
+                </div>
+                <div class="score-ring-label">ZIA</div>
+              </div>
+              <div class="coverage-ring-item">
+                <div class="score-ring score-ring-sm">
+                  <svg viewBox="0 0 80 80">
+                    <circle class="ring-bg" cx="40" cy="40" r="32"></circle>
+                    <circle class="ring-progress" cx="40" cy="40" r="32" stroke="var(--accent-green)"
+                      stroke-dasharray="201" stroke-dashoffset="22" style="transform:rotate(-90deg);transform-origin:center;"></circle>
+                  </svg>
+                  <div class="ring-value"><span class="value" style="font-size:16px;">89%</span></div>
+                </div>
+                <div class="score-ring-label">MDC</div>
+              </div>
+              <div class="coverage-ring-item">
+                <div class="score-ring score-ring-sm">
+                  <svg viewBox="0 0 80 80">
+                    <circle class="ring-bg" cx="40" cy="40" r="32"></circle>
+                    <circle class="ring-progress" cx="40" cy="40" r="32" stroke="var(--accent-green)"
+                      stroke-dasharray="201" stroke-dashoffset="6" style="transform:rotate(-90deg);transform-origin:center;"></circle>
+                  </svg>
+                  <div class="ring-value"><span class="value" style="font-size:16px;">97%</span></div>
+                </div>
+                <div class="score-ring-label">Win Activation</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coverage Trend + Gap Analysis -->
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3>Coverage Trend (6 Months)</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="chartCoverageTrend"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Protection Gap Analysis</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="chartProtectionGap"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Protection Details Table -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3>Coverage Details</h3>
+          </div>
+          <div class="card-body">
+            <div class="stat-row">
+              <div class="stat-label"><i class="fas fa-shield-alt" style="color:var(--accent-blue)"></i> Defender Coverage</div>
+              <div class="stat-value">95%</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label"><span style="font-weight:400;color:var(--text-tertiary);margin-left:28px;">Endpoints Protected</span></div>
+              <div class="stat-value" style="font-size:13px;color:var(--accent-green);">14,472 / 15,234</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label"><span style="font-weight:400;color:var(--text-tertiary);margin-left:28px;">Servers Protected</span></div>
+              <div class="stat-value" style="font-size:13px;color:var(--accent-orange);">1,715 / 1,858</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label"><i class="fas fa-lock" style="color:var(--green)"></i> BitLocker Encryption</div>
+              <div class="stat-value">98%</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label"><i class="fas fa-eye-slash" style="color:var(--orange)"></i> DLP Policy Enabled</div>
+              <div class="stat-value" style="color:var(--accent-orange);">72%</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label"><i class="fas fa-globe" style="color:var(--yellow)"></i> ZIA Deployed</div>
+              <div class="stat-value" style="color:var(--accent-yellow);">81%</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label"><i class="fas fa-cloud-bolt" style="color:var(--accent-purple)"></i> MDC Coverage</div>
+              <div class="stat-value">89%</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label"><i class="fab fa-windows" style="color:var(--accent-blue)"></i> Windows Activation</div>
+              <div class="stat-value">97%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           PAGE: VULNERABILITY & PATCHING
+           ===================================================== -->
+      <section class="page" id="page-vulnerabilities">
+        <div class="section-header mb-24">
+          <div>
+            <h2>Vulnerability &amp; Patch Management</h2>
+            <div class="section-subtitle">Vulnerability assessment, patch compliance, and EOL/EOS tracking</div>
+          </div>
+        </div>
+
+        <!-- CTEM Stages Mini -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3>CTEM Process</h3>
+            <span class="view-details">Scoping &rarr; Discovery &rarr; Prioritization &rarr; Validation &rarr; Mobilization</span>
+          </div>
+          <div class="card-body">
+            <div class="ctem-lifecycle">
+              <div class="ctem-stage"><div class="stage-circle"><i class="fas fa-crosshairs"></i></div><div class="stage-label">Scoping</div></div>
+              <div class="ctem-arrow"></div>
+              <div class="ctem-stage"><div class="stage-circle"><i class="fas fa-search"></i></div><div class="stage-label">Discovery</div></div>
+              <div class="ctem-arrow"></div>
+              <div class="ctem-stage"><div class="stage-circle"><i class="fas fa-sort-amount-down"></i></div><div class="stage-label">Prioritization</div></div>
+              <div class="ctem-arrow"></div>
+              <div class="ctem-stage"><div class="stage-circle"><i class="fas fa-check-double"></i></div><div class="stage-label">Validation</div></div>
+              <div class="ctem-arrow"></div>
+              <div class="ctem-stage"><div class="stage-circle"><i class="fas fa-rocket"></i></div><div class="stage-label">Mobilization</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vulnerability KPIs -->
+        <div class="grid-4 mb-24">
+          <div class="kpi-card">
+            <div class="kpi-icon red"><i class="fas fa-radiation"></i></div>
+            <div class="kpi-value" style="color:var(--accent-red);">342</div>
+            <div class="kpi-label">Critical</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon orange"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="kpi-value" style="color:var(--accent-orange);">689</div>
+            <div class="kpi-label">High</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon yellow"><i class="fas fa-exclamation-circle"></i></div>
+            <div class="kpi-value" style="color:var(--accent-yellow);">1,204</div>
+            <div class="kpi-label">Medium</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon green"><i class="fas fa-info-circle"></i></div>
+            <div class="kpi-value" style="color:var(--accent-green);">749</div>
+            <div class="kpi-label">Low</div>
+          </div>
+        </div>
+
+        <!-- Patch Compliance Bar -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3>Patch Compliance</h3>
+          </div>
+          <div class="card-body">
+            <div class="patch-bar-container">
+              <div class="patch-bar">
+                <div class="patch-segment" style="width:92%;background:var(--green);">N: 92%</div>
+                <div class="patch-segment" style="width:4%;background:var(--yellow);">4%</div>
+                <div class="patch-segment" style="width:2%;background:var(--orange);">2%</div>
+                <div class="patch-segment" style="width:2%;background:var(--red);">2%</div>
+              </div>
+              <div class="patch-legend">
+                <div class="patch-legend-item"><div class="patch-legend-dot" style="background:var(--green);"></div> N (Current)</div>
+                <div class="patch-legend-item"><div class="patch-legend-dot" style="background:var(--yellow);"></div> N-1</div>
+                <div class="patch-legend-item"><div class="patch-legend-dot" style="background:var(--orange);"></div> N-2</div>
+                <div class="patch-legend-item"><div class="patch-legend-dot" style="background:var(--red);"></div> &gt; N-2</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vuln Donut + EOL/EOS -->
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3>Vulnerability Severity Distribution</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="max-height:280px;">
+                <canvas id="chartVulnSeverity"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>EOL / EOS Systems</h3>
+              <span class="view-details" style="color:var(--accent-red);">Action Required</span>
+            </div>
+            <div class="card-body">
+              <div class="eol-item">
+                <div class="eol-icon"><i class="fab fa-windows"></i></div>
+                <div class="eol-name">Windows Server 2012</div>
+                <div class="eol-count">17</div>
+              </div>
+              <div class="eol-item">
+                <div class="eol-icon"><i class="fab fa-windows"></i></div>
+                <div class="eol-name">Windows 10 (EOL builds)</div>
+                <div class="eol-count">53</div>
+              </div>
+              <div class="eol-item">
+                <div class="eol-icon"><i class="fab fa-ubuntu"></i></div>
+                <div class="eol-name">Ubuntu 18.04 LTS</div>
+                <div class="eol-count">12</div>
+              </div>
+              <div class="eol-item">
+                <div class="eol-icon"><i class="fab fa-redhat"></i></div>
+                <div class="eol-name">RHEL 7</div>
+                <div class="eol-count">8</div>
+              </div>
+              <div class="eol-item">
+                <div class="eol-icon"><i class="fas fa-database"></i></div>
+                <div class="eol-name">SQL Server 2014</div>
+                <div class="eol-count">5</div>
+              </div>
+              <div style="margin-top:16px;padding:12px 16px;background:var(--red-light);border-radius:var(--radius-sm);display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--accent-red);">
+                <i class="fas fa-exclamation-triangle"></i> Total EOL/EOS: 95 systems require migration
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk Trend + Exposure Type -->
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3>Vulnerability Risk Trend</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="chartVulnTrend"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Exposure Type</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="chartExposureType"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Sources -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3>Vulnerability Data Sources</h3>
+          </div>
+          <div class="card-body" style="display:flex;gap:16px;flex-wrap:wrap;">
+            <div class="ds-health-card" style="flex:1;min-width:140px;">
+              <div class="ds-icon" style="background:var(--red-light);color:var(--accent-red);"><i class="fas fa-search"></i></div>
+              <div class="ds-info"><div class="ds-name">Nessus</div><div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div></div>
+            </div>
+            <div class="ds-health-card" style="flex:1;min-width:140px;">
+              <div class="ds-icon" style="background:var(--purple-light);color:var(--accent-purple);"><i class="fas fa-cloud-bolt"></i></div>
+              <div class="ds-info"><div class="ds-name">Wiz</div><div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div></div>
+            </div>
+            <div class="ds-health-card" style="flex:1;min-width:140px;">
+              <div class="ds-icon" style="background:var(--blue-light);color:var(--accent-blue);"><i class="fas fa-shield-halved"></i></div>
+              <div class="ds-info"><div class="ds-name">Defender</div><div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div></div>
+            </div>
+            <div class="ds-health-card" style="flex:1;min-width:140px;">
+              <div class="ds-icon" style="background:var(--yellow-light);color:var(--accent-yellow);"><i class="fas fa-terminal"></i></div>
+              <div class="ds-info"><div class="ds-name">SCCM</div><div class="health-indicator"><div class="health-dot degraded"></div><span class="health-text degraded">Degraded</span></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           PAGE: IDENTITY & ACCESS
+           ===================================================== -->
+      <section class="page" id="page-identity">
+        <div class="section-header mb-24">
+          <div>
+            <h2>Identity &amp; Access Management</h2>
+            <div class="section-subtitle">User accounts, privileged access, and identity security posture</div>
+          </div>
+        </div>
+
+        <!-- Identity KPIs -->
+        <div class="grid-4 mb-24">
+          <div class="kpi-card">
+            <div class="kpi-icon blue"><i class="fas fa-users"></i></div>
+            <div class="kpi-value">9,545</div>
+            <div class="kpi-label">Total Employees</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon green"><i class="fas fa-key"></i></div>
+            <div class="kpi-value" style="color:var(--accent-green);">9,200</div>
+            <div class="kpi-label">MFA Enabled (96.4%)</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon purple"><i class="fas fa-robot"></i></div>
+            <div class="kpi-value">345</div>
+            <div class="kpi-label">Service Accounts</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon red"><i class="fas fa-user-lock"></i></div>
+            <div class="kpi-value" style="color:var(--accent-red);">92</div>
+            <div class="kpi-label">Privileged Accounts</div>
+          </div>
+        </div>
+
+        <!-- More Identity Metrics -->
+        <div class="grid-4 mb-24">
+          <div class="kpi-card">
+            <div class="kpi-icon red"><i class="fas fa-crown"></i></div>
+            <div class="kpi-value">12</div>
+            <div class="kpi-label">Domain Admins</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon orange"><i class="fas fa-cloud-bolt"></i></div>
+            <div class="kpi-value">8</div>
+            <div class="kpi-label">Cloud Admins (AWS/Azure)</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon yellow"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="kpi-value" style="color:var(--accent-red);">45</div>
+            <div class="kpi-label">No Password Expiry</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon orange"><i class="fas fa-shield-halved"></i></div>
+            <div class="kpi-value" style="color:var(--accent-red);">26</div>
+            <div class="kpi-label">Without MFA</div>
+          </div>
+        </div>
+
+        <!-- Risk Matrix + MFA Chart -->
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3>Privileged Accounts Risk Matrix</h3>
+              <span class="view-details">MFA vs Account Type</span>
+            </div>
+            <div class="card-body">
+              <table class="risk-matrix">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>MFA: Yes</th>
+                    <th>MFA: No</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight:600;text-align:left;background:none;color:var(--text-primary);">Admin</td>
+                    <td class="cell-safe">80</td>
+                    <td class="cell-danger">12</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:600;text-align:left;background:none;color:var(--text-primary);">Service</td>
+                    <td class="cell-info">310</td>
+                    <td class="cell-warning">35</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:600;text-align:left;background:none;color:var(--text-primary);">User</td>
+                    <td class="cell-safe">9,200</td>
+                    <td class="cell-warning">45</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="margin-top:16px;padding:12px;background:var(--red-light);border-radius:var(--radius-sm);font-size:12px;color:var(--accent-red);font-weight:500;">
+                <i class="fas fa-exclamation-triangle"></i> 12 Admin accounts without MFA require immediate attention
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>MFA Adoption</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="max-height:280px;">
+                <canvas id="chartMFA"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IAM Source Table -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3><i class="fas fa-user-shield" style="color:var(--purple);margin-right:8px;"></i>IAM Controls &amp; Sources</h3>
+          </div>
+          <div class="card-body" style="padding:0;overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Control Area</th>
+                  <th>Source 1</th>
+                  <th>Source 2</th>
+                  <th>Source 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>No. of Employees</td><td><span class="source-badge">AD</span></td><td>-</td><td>-</td></tr>
+                <tr><td>MFA Enabled</td><td><span class="source-badge">AD</span></td><td>-</td><td>-</td></tr>
+                <tr><td>Service Accounts</td><td><span class="source-badge">AD</span></td><td>-</td><td>-</td></tr>
+                <tr><td>Domain Admins</td><td><span class="source-badge">AD</span></td><td>-</td><td>-</td></tr>
+                <tr><td>Local Admin (Endpoint)</td><td><span class="source-badge">Defender</span></td><td>-</td><td>-</td></tr>
+                <tr><td>Linux Local Admin (Server)</td><td><span class="source-badge">Defender</span></td><td>-</td><td>-</td></tr>
+                <tr><td>Windows Local Admin (Server)</td><td><span class="source-badge">Defender</span></td><td>-</td><td>-</td></tr>
+                <tr><td>Local Admin (FW)</td><td><span class="source-badge">Forti Manager</span></td><td>-</td><td>-</td></tr>
+                <tr><td>Local Admin (Database)</td><td><span class="source-badge">Sentinel</span></td><td><span class="source-badge">AWS IAM</span></td><td><span class="source-badge">Azure IAM</span></td></tr>
+                <tr><td>AWS / Azure Admin</td><td><span class="source-badge">AWS IAM</span></td><td><span class="source-badge">Azure IAM</span></td><td><span class="source-badge">WIZ</span></td></tr>
+                <tr><td>Yandex</td><td><span class="source-badge">Yandex Portal</span></td><td>-</td><td>-</td></tr>
+                <tr><td>IDs having no password expiry</td><td><span class="source-badge">AD</span></td><td>-</td><td>-</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           PAGE: NETWORK SECURITY
+           ===================================================== -->
+      <section class="page" id="page-network">
+        <div class="section-header mb-24">
+          <div>
+            <h2>Network Security</h2>
+            <div class="section-subtitle">VPN, firewall, Zscaler proxy/network, and infrastructure security</div>
+          </div>
+        </div>
+
+        <!-- Network KPIs -->
+        <div class="grid-6 mb-24">
+          <div class="kpi-card">
+            <div class="kpi-icon blue"><i class="fas fa-lock"></i></div>
+            <div class="kpi-value">4,200</div>
+            <div class="kpi-label">VPN - FortiClient</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon purple"><i class="fas fa-lock"></i></div>
+            <div class="kpi-value">1,800</div>
+            <div class="kpi-label">VPN - Accops</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon green"><i class="fas fa-fire"></i></div>
+            <div class="kpi-value">42</div>
+            <div class="kpi-label">Total Firewalls</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon cyan"><i class="fas fa-globe"></i></div>
+            <div class="kpi-value" style="color:var(--accent-cyan);">81%</div>
+            <div class="kpi-label">ZIA Deployed</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon green"><i class="fas fa-shield-alt"></i></div>
+            <div class="kpi-value" style="color:var(--accent-green);">76%</div>
+            <div class="kpi-label">ZPA Enrolled</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon orange"><i class="fas fa-chart-line"></i></div>
+            <div class="kpi-value" style="color:var(--accent-orange);">94%</div>
+            <div class="kpi-label">ZDX Score</div>
+          </div>
+        </div>
+
+        <!-- Zscaler Platform Overview -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3><i class="fas fa-globe" style="color:var(--accent-cyan);margin-right:8px;"></i>Zscaler Platform Overview (Proxy / Network)</h3>
+            <span class="view-details">Zero Trust Exchange</span>
+          </div>
+          <div class="card-body">
+            <div class="topology-visual">
+              <div class="topology-node healthy">
+                <div class="node-icon" style="background:linear-gradient(135deg,#00a1e0,#0076b8);"><i class="fas fa-globe"></i></div>
+                <div class="node-label">ZIA</div>
+                <div class="node-count" style="font-size:14px;">Internet Access</div>
+              </div>
+              <div class="topology-connector"></div>
+              <div class="topology-node healthy">
+                <div class="node-icon" style="background:linear-gradient(135deg,var(--accent-cyan),#0ea5e9);"><i class="fas fa-shield-halved"></i></div>
+                <div class="node-label">Zero Trust</div>
+                <div class="node-count" style="font-size:14px;">Exchange</div>
+              </div>
+              <div class="topology-connector"></div>
+              <div class="topology-node healthy">
+                <div class="node-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fas fa-lock"></i></div>
+                <div class="node-label">ZPA</div>
+                <div class="node-count" style="font-size:14px;">Private Access</div>
+              </div>
+              <div class="topology-connector"></div>
+              <div class="topology-node healthy">
+                <div class="node-icon" style="background:linear-gradient(135deg,var(--accent-orange),#ea580c);"><i class="fas fa-chart-line"></i></div>
+                <div class="node-label">ZDX</div>
+                <div class="node-count" style="font-size:14px;">Digital Exp.</div>
+              </div>
+              <div class="topology-connector"></div>
+              <div class="topology-node attention">
+                <div class="node-icon" style="background:linear-gradient(135deg,var(--accent-red),#dc2626);"><i class="fas fa-eye-slash"></i></div>
+                <div class="node-label">DLP</div>
+                <div class="node-count" style="font-size:14px;">Data Protection</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zscaler Component Cards -->
+        <div class="grid-3 mb-24">
+          <!-- ZIA Card -->
+          <div class="zscaler-card">
+            <div class="zscaler-header">
+              <div class="zs-icon" style="background:linear-gradient(135deg,#00a1e0,#0076b8);"><i class="fas fa-globe"></i></div>
+              <div>
+                <div class="zs-title">Zscaler Internet Access (ZIA)</div>
+                <div class="zs-subtitle">Secure Web Gateway &amp; Proxy</div>
+              </div>
+            </div>
+            <div class="zscaler-body">
+              <div class="zscaler-metrics">
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-cyan);">12,340</div>
+                  <div class="zm-label">Users Connected</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:81%;background:var(--accent-cyan);"></div></div>
+                </div>
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-green);">81%</div>
+                  <div class="zm-label">Deployment Coverage</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:81%;background:var(--accent-green);"></div></div>
+                </div>
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-red);">2,894</div>
+                  <div class="zm-label">ZIA Not Deployed (Laptops)</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:19%;background:var(--accent-red);"></div></div>
+                </div>
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-yellow);">98.2%</div>
+                  <div class="zm-label">SSL Inspection Rate</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:98%;background:var(--accent-yellow);"></div></div>
+                </div>
+              </div>
+              <div style="margin-top:16px;padding:12px;background:var(--red-light);border:1px solid rgba(220,38,38,0.15);border-radius:var(--radius-sm);font-size:12px;color:var(--accent-red);font-weight:500;">
+                <i class="fas fa-exclamation-triangle"></i> 2,894 laptops missing ZIA agent &mdash; Source: Zscaler + AD/DNS/DHCP
+              </div>
+            </div>
+          </div>
+
+          <!-- ZPA Card -->
+          <div class="zscaler-card">
+            <div class="zscaler-header">
+              <div class="zs-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fas fa-lock"></i></div>
+              <div>
+                <div class="zs-title">Zscaler Private Access (ZPA)</div>
+                <div class="zs-subtitle">Zero Trust Network Access</div>
+              </div>
+            </div>
+            <div class="zscaler-body">
+              <div class="zscaler-metrics">
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-green);">8,420</div>
+                  <div class="zm-label">Users Enrolled</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:76%;background:var(--accent-green);"></div></div>
+                </div>
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-blue);">246</div>
+                  <div class="zm-label">Private Applications</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:100%;background:var(--accent-blue);"></div></div>
+                </div>
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-purple);">38</div>
+                  <div class="zm-label">App Segments</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:100%;background:var(--accent-purple);"></div></div>
+                </div>
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-cyan);">12</div>
+                  <div class="zm-label">Connector Groups</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:100%;background:var(--accent-cyan);"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ZDX + DLP Card -->
+          <div class="zscaler-card">
+            <div class="zscaler-header">
+              <div class="zs-icon" style="background:linear-gradient(135deg,var(--accent-orange),#ea580c);"><i class="fas fa-chart-line"></i></div>
+              <div>
+                <div class="zs-title">ZDX &amp; Data Protection</div>
+                <div class="zs-subtitle">Digital Experience + DLP</div>
+              </div>
+            </div>
+            <div class="zscaler-body">
+              <div class="zscaler-metrics">
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-orange);">94%</div>
+                  <div class="zm-label">ZDX Health Score</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:94%;background:var(--accent-orange);"></div></div>
+                </div>
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-green);">18ms</div>
+                  <div class="zm-label">Avg. Latency</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:18%;background:var(--accent-green);"></div></div>
+                </div>
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-red);">72%</div>
+                  <div class="zm-label">DLP Policy Enabled</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:72%;background:var(--accent-red);"></div></div>
+                </div>
+                <div class="zscaler-metric">
+                  <div class="zm-value" style="color:var(--accent-yellow);">312</div>
+                  <div class="zm-label">Users without DLP</div>
+                  <div class="zm-bar"><div class="zm-bar-fill" style="width:28%;background:var(--accent-yellow);"></div></div>
+                </div>
+              </div>
+              <div style="margin-top:16px;padding:12px;background:var(--orange-light);border:1px solid rgba(234,88,12,0.15);border-radius:var(--radius-sm);font-size:12px;color:var(--accent-orange);font-weight:500;">
+                <i class="fas fa-info-circle"></i> DLP policy rollout in progress &mdash; Source: Zscaler + AD/Intune
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zscaler URL Filtering + SSL Inspection -->
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3><i class="fas fa-filter" style="color:var(--accent-blue);margin-right:8px;"></i>URL Filtering &amp; Threat Prevention</h3>
+            </div>
+            <div class="card-body">
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-ban" style="color:var(--accent-red)"></i> Blocked Threats (30d)</div>
+                <div class="stat-value" style="color:var(--accent-red);">48,230</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-virus" style="color:var(--accent-orange)"></i> Malware Blocked</div>
+                <div class="stat-value" style="color:var(--accent-orange);">3,412</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-fish" style="color:var(--accent-yellow)"></i> Phishing Attempts</div>
+                <div class="stat-value" style="color:var(--accent-yellow);">1,892</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-terminal" style="color:var(--accent-purple)"></i> C2 Callbacks Blocked</div>
+                <div class="stat-value" style="color:var(--accent-purple);">127</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-chart-pie" style="color:var(--accent-cyan)"></i> URL Categories Active</div>
+                <div class="stat-value">84</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3><i class="fas fa-lock" style="color:var(--accent-green);margin-right:8px;"></i>SSL/TLS Inspection</h3>
+            </div>
+            <div class="card-body">
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-shield-alt" style="color:var(--accent-green)"></i> SSL Inspection Coverage</div>
+                <div class="stat-value" style="color:var(--accent-green);">98.2%</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-stream" style="color:var(--accent-blue)"></i> Inspected Sessions (30d)</div>
+                <div class="stat-value">14.2M</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-exclamation-triangle" style="color:var(--accent-yellow)"></i> Bypass Rules</div>
+                <div class="stat-value" style="color:var(--accent-yellow);">23</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-certificate" style="color:var(--accent-purple)"></i> Certificate Expiring &lt;30d</div>
+                <div class="stat-value" style="color:var(--accent-red);">2</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-check-double" style="color:var(--accent-cyan)"></i> TLS 1.3 Adoption</div>
+                <div class="stat-value" style="color:var(--accent-cyan);">87%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zscaler Deployment Chart -->
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3>Zscaler Deployment Coverage</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="chartZscalerDeploy"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Threat Trends (Zscaler ZIA)</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="chartZscalerThreats"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Network Topology (Firewall + VPN) -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3>Firewall &amp; VPN Architecture</h3>
+            <span class="view-details">Health-based coloring</span>
+          </div>
+          <div class="card-body">
+            <div class="topology-visual">
+              <div class="topology-node healthy">
+                <div class="node-icon" style="background:linear-gradient(135deg,var(--accent-green),var(--teal));"><i class="fas fa-fire"></i></div>
+                <div class="node-label">DC Firewalls</div>
+                <div class="node-count">24</div>
+              </div>
+              <div class="topology-connector"></div>
+              <div class="topology-node healthy">
+                <div class="node-icon" style="background:linear-gradient(135deg,var(--accent-blue),var(--accent-cyan));"><i class="fas fa-fire"></i></div>
+                <div class="node-label">VAC Firewalls</div>
+                <div class="node-count">18</div>
+              </div>
+              <div class="topology-connector"></div>
+              <div class="topology-node healthy">
+                <div class="node-icon" style="background:linear-gradient(135deg,var(--accent-purple),#8b5cf6);"><i class="fas fa-users"></i></div>
+                <div class="node-label">VPN - Forti</div>
+                <div class="node-count">4,200</div>
+              </div>
+              <div class="topology-connector"></div>
+              <div class="topology-node attention">
+                <div class="node-icon" style="background:linear-gradient(135deg,var(--accent-orange),#ea580c);"><i class="fas fa-users"></i></div>
+                <div class="node-label">VPN - Accops</div>
+                <div class="node-count">1,800</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Firewall Details -->
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3>Firewall Inventory</h3>
+            </div>
+            <div class="card-body">
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-building" style="color:var(--accent-blue)"></i> Data Center Firewalls</div>
+                <div class="stat-value">24</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-map-marker-alt" style="color:var(--accent-orange)"></i> VAC Firewalls</div>
+                <div class="stat-value">18</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-check-circle" style="color:var(--accent-green)"></i> Licensed</div>
+                <div class="stat-value" style="color:var(--accent-green);">38</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-exclamation-circle" style="color:var(--accent-red)"></i> Expiring within 90 days</div>
+                <div class="stat-value" style="color:var(--accent-red);">4</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Firewall Admin Accounts</h3>
+            </div>
+            <div class="card-body">
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-user-cog" style="color:var(--accent-purple)"></i> Total Admin Accounts</div>
+                <div class="stat-value">67</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-key" style="color:var(--accent-green)"></i> With MFA</div>
+                <div class="stat-value" style="color:var(--accent-green);">58</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-exclamation-triangle" style="color:var(--accent-red)"></i> Without MFA</div>
+                <div class="stat-value" style="color:var(--accent-red);">9</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-clock" style="color:var(--accent-yellow)"></i> Default Credentials</div>
+                <div class="stat-value" style="color:var(--accent-red);">2</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Network + Zscaler Source Table -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3><i class="fas fa-network-wired" style="color:var(--accent-cyan);margin-right:8px;"></i>Network &amp; Zscaler Controls &amp; Sources</h3>
+          </div>
+          <div class="card-body" style="padding:0;overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Control Area</th>
+                  <th>Source 1</th>
+                  <th>Source 2</th>
+                  <th>Source 3</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>ZIA - Not Deployed (Laptops)</td><td><span class="source-badge">Zscaler</span></td><td><span class="source-badge">AD/DNS/DHCP</span></td><td>-</td><td><span class="risk-badge high">Gap</span></td></tr>
+                <tr><td>ZPA - Enrollment Coverage</td><td><span class="source-badge">Zscaler</span></td><td><span class="source-badge">AD/Intune</span></td><td>-</td><td><span class="risk-badge medium">Monitor</span></td></tr>
+                <tr><td>ZDX - Health Score</td><td><span class="source-badge">Zscaler</span></td><td>-</td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>DLP - Policy Not Enabled</td><td><span class="source-badge">Zscaler</span></td><td><span class="source-badge">AD/Intune</span></td><td>-</td><td><span class="risk-badge high">Gap</span></td></tr>
+                <tr><td>SSL/TLS Inspection</td><td><span class="source-badge">Zscaler</span></td><td>-</td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>URL Filtering</td><td><span class="source-badge">Zscaler</span></td><td>-</td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>VPN Users FortiClient</td><td><span class="source-badge">Forti Console</span></td><td><span class="source-badge">AD OU</span></td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>VPN Users (Accops)</td><td><span class="source-badge">Accops Portal</span></td><td><span class="source-badge">AD OU</span></td><td>-</td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>Count of DC FW</td><td><span class="source-badge">Nessus</span></td><td><span class="source-badge">Port Scanning</span></td><td><span class="source-badge">Tufin/Nipper</span></td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>Count of VAC FW</td><td><span class="source-badge">Nessus</span></td><td><span class="source-badge">Port Scanning</span></td><td><span class="source-badge">Tufin/Nipper</span></td><td><span class="risk-badge low">OK</span></td></tr>
+                <tr><td>Licensing</td><td><span class="source-badge">Forti Manager</span></td><td><span class="source-badge">Zscaler Admin</span></td><td>-</td><td><span class="risk-badge medium">Monitor</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           PAGE: CLOUD SECURITY
+           ===================================================== -->
+      <section class="page" id="page-cloud">
+        <div class="section-header mb-24">
+          <div>
+            <h2>Cloud Security</h2>
+            <div class="section-subtitle">Multi-cloud governance, inventory, and security coverage</div>
+          </div>
+        </div>
+
+        <!-- Cloud KPIs -->
+        <div class="grid-4 mb-24">
+          <div class="kpi-card">
+            <div class="kpi-icon orange"><i class="fab fa-aws"></i></div>
+            <div class="kpi-value">342</div>
+            <div class="kpi-label">AWS Resources</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon blue"><i class="fab fa-microsoft"></i></div>
+            <div class="kpi-value">567</div>
+            <div class="kpi-label">Azure Resources</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon purple"><i class="fas fa-shield-halved"></i></div>
+            <div class="kpi-value" style="color:var(--accent-green);">88%</div>
+            <div class="kpi-label">Wiz Coverage</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon green"><i class="fas fa-file-lines"></i></div>
+            <div class="kpi-value">92%</div>
+            <div class="kpi-label">Cloud Logging</div>
+          </div>
+        </div>
+
+        <!-- Cloud Architecture Visual -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3>Cloud Governance Architecture</h3>
+          </div>
+          <div class="card-body">
+            <div class="cloud-arch">
+              <div class="cloud-provider" style="border-color:var(--accent-orange);">
+                <div class="provider-icon" style="background:linear-gradient(135deg,#ff9900,#ffad33);"><i class="fab fa-aws"></i></div>
+                <div class="provider-name">AWS</div>
+                <div class="provider-count">342</div>
+              </div>
+              <div class="topology-connector"></div>
+              <div class="cloud-connector">
+                <div class="connector-label">Wiz</div>
+                <div class="connector-value">88%</div>
+                <div style="font-size:10px;opacity:0.7;">Coverage</div>
+              </div>
+              <div class="topology-connector"></div>
+              <div class="cloud-provider" style="border-color:var(--blue-primary);">
+                <div class="provider-icon" style="background:linear-gradient(135deg,#0078d4,#2b88d8);"><i class="fab fa-microsoft"></i></div>
+                <div class="provider-name">Azure</div>
+                <div class="provider-count">567</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cloud Details -->
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header">
+              <h3>Cloud Security Posture</h3>
+            </div>
+            <div class="card-body">
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-cloud-upload-alt" style="color:var(--accent-blue)"></i> Cloud Onboarding</div>
+                <div class="stat-value" style="color:var(--accent-green);">Active</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-shield-halved" style="color:var(--accent-purple)"></i> Wiz Coverage</div>
+                <div class="stat-value">88%</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-file-alt" style="color:var(--green)"></i> Cloud Logging (Monitor/CloudTrail/GuardDuty)</div>
+                <div class="stat-value">92%</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-lock" style="color:var(--cyan)"></i> DB Encryption</div>
+                <div class="stat-value">85%</div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-label"><i class="fas fa-inventory" style="color:var(--orange)"></i> AWS Inventory in Sentinel</div>
+                <div class="stat-value" style="color:var(--accent-green);">Integrated</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Cloud Coverage Breakdown</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="max-height:260px;">
+                <canvas id="chartCloudCoverage"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cloud Source Table -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3><i class="fas fa-cloud" style="color:var(--cyan);margin-right:8px;"></i>Cloud Security Controls &amp; Sources</h3>
+          </div>
+          <div class="card-body" style="padding:0;overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Control Area</th>
+                  <th>Source 1</th>
+                  <th>Source 2</th>
+                  <th>Source 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>AWS Inventory</td><td><span class="source-badge">Sentinel</span></td><td><span class="source-badge">WIZ</span></td><td>-</td></tr>
+                <tr><td>DB Encryption</td><td><span class="source-badge">WIZ</span></td><td><span class="source-badge">AD</span></td><td>-</td></tr>
+                <tr><td>Azure Monitor / CloudTrail / GuardDuty</td><td><span class="source-badge">WIZ</span></td><td><span class="source-badge">Sentinel</span></td><td>-</td></tr>
+                <tr><td>Cloud Onboarding on WIZ</td><td><span class="source-badge">WIZ</span></td><td><span class="source-badge">Sentinel</span></td><td>-</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           PAGE: DATA SOURCES
+           ===================================================== -->
+      <section class="page" id="page-datasources">
+        <div class="section-header mb-24">
+          <div>
+            <h2>Security Data Reliability</h2>
+            <div class="section-subtitle">Integration health, data freshness, and source quality across all security tools</div>
+          </div>
+        </div>
+
+        <!-- Health Summary -->
+        <div class="grid-4 mb-24">
+          <div class="kpi-card">
+            <div class="kpi-icon green"><i class="fas fa-check-circle"></i></div>
+            <div class="kpi-value" style="color:var(--accent-green);">7</div>
+            <div class="kpi-label">Healthy Sources</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon yellow"><i class="fas fa-exclamation-circle"></i></div>
+            <div class="kpi-value" style="color:var(--accent-yellow);">1</div>
+            <div class="kpi-label">Needs Attention</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon red"><i class="fas fa-times-circle"></i></div>
+            <div class="kpi-value" style="color:var(--accent-red);">1</div>
+            <div class="kpi-label">Degraded</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon blue"><i class="fas fa-plug"></i></div>
+            <div class="kpi-value">9</div>
+            <div class="kpi-label">Total Integrations</div>
+          </div>
+        </div>
+
+        <!-- Data Source Cards -->
+        <div class="grid-3 mb-24">
+          <div class="card">
+            <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+              <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--blue-primary);"><i class="fas fa-sitemap"></i></div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;">Active Directory</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Last sync: 5 mins ago</div>
+              </div>
+              <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+              <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--accent-green);"><i class="fas fa-mobile-screen"></i></div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;">Intune</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Last sync: 12 mins ago</div>
+              </div>
+              <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+              <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--purple-light);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--purple);"><i class="fas fa-shield-halved"></i></div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;">Defender</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Last sync: 3 mins ago</div>
+              </div>
+              <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+              <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--purple-light);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--purple);"><i class="fas fa-cloud-bolt"></i></div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;">Wiz</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Last sync: 8 mins ago</div>
+              </div>
+              <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+              <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--orange-light);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--accent-orange);"><i class="fas fa-fire"></i></div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;">FortiManager</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Last sync: 2 hours ago</div>
+              </div>
+              <div class="health-indicator"><div class="health-dot attention"></div><span class="health-text attention">Attention</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+              <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--orange-light);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--accent-orange);"><i class="fas fa-desktop"></i></div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;">Accops</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Last sync: 15 mins ago</div>
+              </div>
+              <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+              <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--accent-red);"><i class="fas fa-search"></i></div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;">Nessus</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Last sync: 22 mins ago</div>
+              </div>
+              <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+              <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--blue-primary);"><i class="fas fa-satellite-dish"></i></div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;">Sentinel</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Last sync: 1 min ago</div>
+              </div>
+              <div class="health-indicator"><div class="health-dot healthy"></div><span class="health-text healthy">Healthy</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+              <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--yellow-light);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--accent-yellow);"><i class="fas fa-terminal"></i></div>
+              <div style="flex:1;">
+                <div style="font-size:15px;font-weight:700;">SCCM</div>
+                <div style="font-size:11px;color:var(--text-tertiary);">Last sync: 6 hours ago</div>
+              </div>
+              <div class="health-indicator"><div class="health-dot degraded"></div><span class="health-text degraded">Degraded</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data freshness chart -->
+        <div class="card mb-24">
+          <div class="card-header">
+            <h3>Data Freshness Overview</h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="chartDataFreshness"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /page-container -->
+  </div><!-- /main-content -->
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Detail View</h3>
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
